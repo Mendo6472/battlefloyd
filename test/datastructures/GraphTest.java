@@ -1,5 +1,6 @@
 package test.datastructures;
 
+import datastructures.Graph.AdjacencyListGraph.AdjacencyListGraph;
 import datastructures.Graph.AdjacencyMatrixGraph.AdjacencyMatrixGraph;
 import datastructures.Graph.Graph.IGraph;
 import org.junit.Test;

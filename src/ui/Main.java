@@ -1,12 +1,13 @@
 package ui;
 
-import datastructures.Graph.Graph;
-
-import datastructures.Graph.Vertex;
+import datastructures.Graph.*;
+import datastructures.Graph.AdjacencyListGraph.AdjacencyListGraph;
+import datastructures.Graph.Graph.IGraph;
+import datastructures.Graph.Graph.Vertex;
 
 public class Main {
     public static void main(String[] args) {
-        Graph<String> graph = new Graph<>(false, true);
+        AdjacencyListGraph<String> graph = new AdjacencyListGraph<>(false, true);
         Vertex<String> vertexA = new Vertex<>("A");
         Vertex<String> vertexB = new Vertex<>("B");
         Vertex<String> vertexC = new Vertex<>("C");
@@ -31,7 +32,7 @@ public class Main {
         graph.insertEdge(vertexD, vertexZ, 6);
         graph.insertEdge(vertexE, vertexZ, 3);
 
-        Graph<String>.DijkstraResult result = graph.dijkstra(vertexA);
+        AdjacencyListGraph<String>.DijkstraResult result = graph.dijkstra(vertexA);
         for (Vertex<String> vertex : result.getPrevious()) {
             if ( vertex != null ) {
                 System.out.println(vertex.getValue());

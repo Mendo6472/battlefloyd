@@ -3,21 +3,16 @@ package datastructures.Graph.AdjacencyListGraph;
 import datastructures.Graph.Graph.*;
 import datastructures.NaryTree.NaryTree;
 import datastructures.NaryTree.Node;
-<<<<<<< HEAD:src/datastructures/Graph/AdjacencyListGraph/AdjacencyListGraph.java
 import datastructures.Graph.Graph.Vertex;
-=======
+
 import datastructures.PriorityQueue.Heap;
->>>>>>> Graph-implementation:src/datastructures/Graph/Graph.java
+
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-<<<<<<< HEAD:src/datastructures/Graph/AdjacencyListGraph/AdjacencyListGraph.java
 public class AdjacencyListGraph<V> implements IGraph<V> {
-=======
-public class Graph<V> implements IGraph<V>{
->>>>>>> Graph-implementation:src/datastructures/Graph/Graph.java
     boolean addressed;
     boolean weighted;
     ArrayList<Vertex<V>> vertexList;
