@@ -1,52 +1,47 @@
 package ui;
 
-import java.util.ArrayList;
+import datastructures.Graph.Graph;
 
-import datastructures.Graph.AdjacencyMatrixGraph.AdjacencyMatrixGraph;
-import datastructures.Graph.Graph.IGraph;
-import datastructures.Graph.Graph.Vertex;
-import datastructures.NaryTree.NaryTree;
+import datastructures.Graph.Vertex;
 
 public class Main {
     public static void main(String[] args) {
-        IGraph<String> adjacencyListGraph = new AdjacencyMatrixGraph<>(false, false);
-        Vertex<String> vertex1 = new Vertex<>("A");
-        Vertex<String> vertex2 = new Vertex<>("B");
-        Vertex<String> vertex3 = new Vertex<>("C");
-        Vertex<String> vertex4 = new Vertex<>("D");
-        Vertex<String> vertex5 = new Vertex<>("E");
-        Vertex<String> vertex6 = new Vertex<>("F");
-        Vertex<String> vertex7 = new Vertex<>("G");
-        Vertex<String> vertex8 = new Vertex<>("H");
+        Graph<String> graph = new Graph<>(false, true);
+        Vertex<String> vertexA = new Vertex<>("A");
+        Vertex<String> vertexB = new Vertex<>("B");
+        Vertex<String> vertexC = new Vertex<>("C");
+        Vertex<String> vertexD = new Vertex<>("D");
+        Vertex<String> vertexE = new Vertex<>("E");
+        Vertex<String> vertexZ = new Vertex<>("Z");
 
-        adjacencyListGraph.insertVertex(vertex1);
-        adjacencyListGraph.insertVertex(vertex2);
-        adjacencyListGraph.insertVertex(vertex3);
-        adjacencyListGraph.insertVertex(vertex4);
-        adjacencyListGraph.insertVertex(vertex5);
-        adjacencyListGraph.insertVertex(vertex6);
-        adjacencyListGraph.insertVertex(vertex7);
-        adjacencyListGraph.insertVertex(vertex8);
+        graph.insertVertex(vertexA);
+        graph.insertVertex(vertexB);
+        graph.insertVertex(vertexC);
+        graph.insertVertex(vertexD);
+        graph.insertVertex(vertexE);
+        graph.insertVertex(vertexZ);
 
-        adjacencyListGraph.insertEdge(vertex1, vertex2, 0);
-        adjacencyListGraph.insertEdge(vertex1, vertex3, 0);
-        adjacencyListGraph.insertEdge(vertex2, vertex4, 0);
-        adjacencyListGraph.insertEdge(vertex2, vertex5, 0);
-        adjacencyListGraph.insertEdge(vertex3, vertex6, 0);
-        adjacencyListGraph.insertEdge(vertex3, vertex7, 0);
+        graph.insertEdge(vertexA, vertexB, 4);
+        graph.insertEdge(vertexA, vertexC, 2);
+        graph.insertEdge(vertexB, vertexD, 5);
+        graph.insertEdge(vertexB, vertexC, 1);
+        graph.insertEdge(vertexC, vertexD, 8);
+        graph.insertEdge(vertexC, vertexE, 10);
+        graph.insertEdge(vertexD, vertexE, 2);
+        graph.insertEdge(vertexD, vertexZ, 6);
+        graph.insertEdge(vertexE, vertexZ, 3);
 
-        NaryTree<String> naryTreeBFS = adjacencyListGraph.BFS(vertex3);
-        String preorder;
-        preorder = naryTreeBFS.preorder(naryTreeBFS.getRoot());
-        System.out.println("Preorder of BFS tree: " + preorder);
-
-        ArrayList<NaryTree<String>> naryTreeDFS = adjacencyListGraph.DFS();
-        for (NaryTree<String> naryTree : naryTreeDFS) {
-            preorder = naryTree.preorder(naryTree.getRoot());
-            System.out.println("Preorder of DFS tree: " + preorder);
+        Graph<String>.DijkstraResult result = graph.dijkstra(vertexA);
+        for (Vertex<String> vertex : result.getPrevious()) {
+            if ( vertex != null ) {
+                System.out.println(vertex.getValue());
+            }else{
+                System.out.println("null");
+            }
         }
-
-        
+        for (Double distance: result.getDistances()) {
+            System.out.println(distance);
+        }
 
 
     }

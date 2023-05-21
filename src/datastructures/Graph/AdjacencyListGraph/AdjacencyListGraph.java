@@ -3,13 +3,21 @@ package datastructures.Graph.AdjacencyListGraph;
 import datastructures.Graph.Graph.*;
 import datastructures.NaryTree.NaryTree;
 import datastructures.NaryTree.Node;
+<<<<<<< HEAD:src/datastructures/Graph/AdjacencyListGraph/AdjacencyListGraph.java
 import datastructures.Graph.Graph.Vertex;
+=======
+import datastructures.PriorityQueue.Heap;
+>>>>>>> Graph-implementation:src/datastructures/Graph/Graph.java
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
+<<<<<<< HEAD:src/datastructures/Graph/AdjacencyListGraph/AdjacencyListGraph.java
 public class AdjacencyListGraph<V> implements IGraph<V> {
+=======
+public class Graph<V> implements IGraph<V>{
+>>>>>>> Graph-implementation:src/datastructures/Graph/Graph.java
     boolean addressed;
     boolean weighted;
     ArrayList<Vertex<V>> vertexList;
@@ -177,4 +185,56 @@ public class AdjacencyListGraph<V> implements IGraph<V> {
         }
         return -1;
     }
+
+    public class DijkstraResult {
+        private final ArrayList<Vertex<V>> previous;
+        private final ArrayList<Double> distances;
+
+        public DijkstraResult(ArrayList<Vertex<V>>previous, ArrayList<Double> distances) {
+            this.previous = previous;
+            this.distances = distances;
+        }
+
+        public  ArrayList<Vertex<V>> getPrevious() {
+            return previous;
+        }
+
+        public ArrayList<Double>  getDistances() {
+            return distances;
+        }
+    }
+
+    public DijkstraResult dijkstra (Vertex<V> source){
+        ArrayList<Vertex<V>> previous = new ArrayList<>();
+        ArrayList<Double> distances = new ArrayList<>();
+        Heap<Double, Vertex<V>> queue = new Heap<>();
+        for (int i = 0; i < vertexList.size(); i++) {
+            if (vertexList.get(i) != source){
+                distances.add(Double.MAX_VALUE);
+            }else{
+                distances.add(0.0);
+            }
+            previous.add(null);
+            queue.insert(distances.get(i),vertexList.get(i));
+        }
+        queue.buildMinHeap();
+
+        while (queue.getHeapSize()>0){
+            Vertex<V> u = queue.extractMin().getValue();
+            for (Pair<V> pair : u.getAdjacencyList()) {
+                double alt = distances.get(vertexList.indexOf(u)) + pair.getWeight();
+                if (alt < distances.get(vertexList.indexOf(pair.getVertex()))){
+                    distances.set(vertexList.indexOf(pair.getVertex()),alt);
+                    previous.set(vertexList.indexOf(pair.getVertex()),u);
+                    queue.decreaseKey(queue.searchByValue(pair.getVertex()),alt);
+                }
+                queue.buildMinHeap();
+
+            }
+        }
+        return new DijkstraResult(previous, distances);
+    }
+
+
+
 }
