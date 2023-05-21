@@ -13,5 +13,5 @@ public interface IGraph<V> {
     public boolean deleteEdge(Vertex<V> v1, Vertex<V> v2);
     public NaryTree<V> BFS(Vertex<V> s);
     public ArrayList<NaryTree<V>> DFS();
-    public void DFSV(Vertex<V> u, NaryTree<V> n);
+    public DijkstraResult<V> dijkstra (Vertex<V> source);
 }

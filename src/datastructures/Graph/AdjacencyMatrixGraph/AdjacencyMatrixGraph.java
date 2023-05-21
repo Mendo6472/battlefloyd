@@ -1,10 +1,10 @@
 package datastructures.Graph.AdjacencyMatrixGraph;
 
-import datastructures.Graph.Graph.Color;
-import datastructures.Graph.Graph.Vertex;
-import datastructures.Graph.Graph.IGraph;
+import datastructures.Graph.AdjacencyListGraph.AdjacencyListGraph;
+import datastructures.Graph.Graph.*;
 import datastructures.NaryTree.NaryTree;
 import datastructures.NaryTree.Node;
+import datastructures.PriorityQueue.Heap;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -145,7 +145,7 @@ public class AdjacencyMatrixGraph<V> implements IGraph<V> {
 
         return naryTrees;
     }
-    @Override
+
     public void DFSV(Vertex<V> u, NaryTree<V> n) {
         time += 1;
         u.setDistance(time);
@@ -162,5 +162,53 @@ public class AdjacencyMatrixGraph<V> implements IGraph<V> {
         }
         u.setColor(Color.BLACK);
         time = time + 1;
+    }
+
+    @Override
+    public DijkstraResult<V> dijkstra (Vertex<V> source){
+        ArrayList<Vertex<V>> previous = new ArrayList<>();
+        ArrayList<Double> distances = new ArrayList<>();
+        Heap<Double, Vertex<V>> queue = new Heap<>();
+        for (int i = 0; i < vertexList.size(); i++) {
+            if (vertexList.get(i) != source){
+                distances.add(Double.MAX_VALUE);
+            }else{
+                distances.add(0.0);
+            }
+            previous.add(null);
+            queue.insert(distances.get(i),vertexList.get(i));
+        }
+        queue.buildMinHeap();
+
+        while (queue.getHeapSize()>0){
+            Vertex<V> u = queue.extractMin().getValue();
+            int uPos = vertexList.indexOf(u);
+            for(int i = 0; i < vertexList.size(); i++){
+                if(adjacencyMatrixGraph.get(uPos).get(i) < Double.MAX_VALUE){
+                    double alt = distances.get(uPos) + adjacencyMatrixGraph.get(uPos).get(i);
+                    if(alt < distances.get(i)){
+                        distances.set(i, alt);
+                        previous.set(i, u);
+                        queue.decreaseKey(queue.searchByValue(vertexList.get(i)), alt);
+                    }
+                    queue.buildMinHeap();
+                }
+
+            }
+        }
+        return new DijkstraResult<V>(previous, distances);
+    }
+
+    public void showMatrix(){
+        for(int i = 0; i < vertexList.size(); i++){
+            for(int j = 0; j < vertexList.size(); j++){
+                if(adjacencyMatrixGraph.get(i).get(j) == Double.MAX_VALUE){
+                    System.out.print("[inf]");
+                } else {
+                    System.out.print("[" + adjacencyMatrixGraph.get(i).get(j)+ "]");
+                }
+            }
+            System.out.println(" ");
+        }
     }
 }

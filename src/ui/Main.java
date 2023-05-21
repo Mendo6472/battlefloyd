@@ -2,12 +2,14 @@ package ui;
 
 import datastructures.Graph.*;
 import datastructures.Graph.AdjacencyListGraph.AdjacencyListGraph;
+import datastructures.Graph.AdjacencyMatrixGraph.AdjacencyMatrixGraph;
+import datastructures.Graph.Graph.DijkstraResult;
 import datastructures.Graph.Graph.IGraph;
 import datastructures.Graph.Graph.Vertex;
 
 public class Main {
     public static void main(String[] args) {
-        AdjacencyListGraph<String> graph = new AdjacencyListGraph<>(false, true);
+        AdjacencyMatrixGraph<String> graph = new AdjacencyMatrixGraph<>(false, true);
         Vertex<String> vertexA = new Vertex<>("A");
         Vertex<String> vertexB = new Vertex<>("B");
         Vertex<String> vertexC = new Vertex<>("C");
@@ -32,12 +34,13 @@ public class Main {
         graph.insertEdge(vertexD, vertexZ, 6);
         graph.insertEdge(vertexE, vertexZ, 3);
 
-        AdjacencyListGraph<String>.DijkstraResult result = graph.dijkstra(vertexA);
-        for (Vertex<String> vertex : result.getPrevious()) {
-            if ( vertex != null ) {
+        graph.showMatrix();
+        DijkstraResult<String> result = graph.dijkstra(vertexA);
+        for (Vertex<String> vertex : result.getPrevious()){
+            if( vertex != null){
                 System.out.println(vertex.getValue());
-            }else{
-                System.out.println("null");
+            } else {
+                System.out.println("nill");
             }
         }
         for (Double distance: result.getDistances()) {

@@ -147,7 +147,7 @@ public class AdjacencyListGraph<V> implements IGraph<V> {
 
         return naryTrees;
     }
-    @Override
+
     public void DFSV(Vertex<V> u, NaryTree<V> n) {
         time += 1;
         u.setDistance(time);
@@ -181,25 +181,8 @@ public class AdjacencyListGraph<V> implements IGraph<V> {
         return -1;
     }
 
-    public class DijkstraResult {
-        private final ArrayList<Vertex<V>> previous;
-        private final ArrayList<Double> distances;
-
-        public DijkstraResult(ArrayList<Vertex<V>>previous, ArrayList<Double> distances) {
-            this.previous = previous;
-            this.distances = distances;
-        }
-
-        public  ArrayList<Vertex<V>> getPrevious() {
-            return previous;
-        }
-
-        public ArrayList<Double>  getDistances() {
-            return distances;
-        }
-    }
-
-    public DijkstraResult dijkstra (Vertex<V> source){
+    @Override
+    public DijkstraResult<V> dijkstra (Vertex<V> source){
         ArrayList<Vertex<V>> previous = new ArrayList<>();
         ArrayList<Double> distances = new ArrayList<>();
         Heap<Double, Vertex<V>> queue = new Heap<>();
@@ -227,7 +210,7 @@ public class AdjacencyListGraph<V> implements IGraph<V> {
 
             }
         }
-        return new DijkstraResult(previous, distances);
+        return new DijkstraResult<V>(previous, distances);
     }
 
 
