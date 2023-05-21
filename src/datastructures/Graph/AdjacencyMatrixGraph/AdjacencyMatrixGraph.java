@@ -55,13 +55,14 @@ public class AdjacencyMatrixGraph<V> implements IGraph<V> {
         int v1Pos = vertexList.indexOf(v1);
         int v2Pos = vertexList.indexOf(v2);
         if(addressed){
+            if(adjacencyMatrixGraph.get(v1Pos).get(v2Pos) < Double.MAX_VALUE) return false;
             adjacencyMatrixGraph.get(v1Pos).set(v2Pos, weight);
-            return true;
         } else {
+            if(adjacencyMatrixGraph.get(v1Pos).get(v2Pos) < Double.MAX_VALUE || adjacencyMatrixGraph.get(v2Pos).get(v1Pos) < Double.MAX_VALUE) return false;
             adjacencyMatrixGraph.get(v1Pos).set(v2Pos, weight);
             adjacencyMatrixGraph.get(v2Pos).set(v1Pos, weight);
-            return true;
         }
+        return true;
     }
 
     @Override

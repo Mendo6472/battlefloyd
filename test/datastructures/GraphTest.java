@@ -105,7 +105,7 @@ public class GraphTest {
         setupStage1();
         Vertex<String> vertex1 = new Vertex<>("A");
         Vertex<String> vertex2 = new Vertex<>("D");
-        assertTrue(adjacencyListGraph.insertEdge(vertex1, vertex2, 0));
+        assertFalse(adjacencyListGraph.insertEdge(vertex1, vertex2, 0));
     }
 
     @Test
@@ -113,8 +113,9 @@ public class GraphTest {
         setupStage1();
         Vertex<String> vertex1 = new Vertex<>("A");
         Vertex<String> vertex2 = new Vertex<>("B");
-        adjacencyListGraph.insertEdge(vertex1, vertex2, 0);
-        assertFalse(adjacencyListGraph.insertEdge(vertex1, vertex2, 0));
+        adjacencyListGraph.insertVertex(vertex1);
+        adjacencyListGraph.insertVertex(vertex2);
+        assertTrue(adjacencyListGraph.insertEdge(vertex1, vertex2, 0));
     }
 
     @Test
@@ -122,10 +123,10 @@ public class GraphTest {
         setupStage1();
         Vertex<String> vertex1 = new Vertex<>("A");
         Vertex<String> vertex2 = new Vertex<>("B");
-        Vertex<String> vertex3 = new Vertex<>("C");
-        adjacencyListGraph.insertEdge(vertex1, vertex2, 0);
-        adjacencyListGraph.insertEdge(vertex1, vertex3, 0);
-        assertFalse(adjacencyListGraph.insertEdge(vertex3, vertex1, 0));
+        adjacencyListGraph.insertVertex(vertex1);
+        adjacencyListGraph.insertVertex(vertex2);
+        assertTrue(adjacencyListGraph.insertEdge(vertex1, vertex2, 0));
+        assertFalse(adjacencyListGraph.insertEdge(vertex2, vertex1, 0));
     }
 
     // Delete vertex

@@ -34,9 +34,9 @@ public class AdjacencyListGraph<V> implements IGraph<V> {
 
     @Override
     public boolean insertEdge(Vertex<V> v1, Vertex<V> v2, double weight) {
+        if(!vertexList.contains(v1) || !vertexList.contains(v2)) return false;
         Pair<V> pairV1 = new Pair<>(v1,weight);
         Pair<V> pairV2 = new Pair<>(v2,weight);
-
         if(addressed){
             if(!searchVertexInAdjencyList(v1,v2)){
                 v2.getAdjacencyList().add(pairV1);
