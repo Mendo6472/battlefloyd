@@ -1,52 +1,47 @@
 package ui;
 
-import java.util.ArrayList;
-
 import datastructures.Graph.Graph;
+
 import datastructures.Graph.Vertex;
-import datastructures.NaryTree.NaryTree;
-import datastructures.NaryTree.Node;
 
 public class Main {
     public static void main(String[] args) {
-        Graph<String> graph = new Graph<>(false, false);
-        Vertex<String> vertex1 = new Vertex<>("A");
-        Vertex<String> vertex2 = new Vertex<>("B");
-        Vertex<String> vertex3 = new Vertex<>("C");
-        Vertex<String> vertex4 = new Vertex<>("D");
-        Vertex<String> vertex5 = new Vertex<>("E");
-        Vertex<String> vertex6 = new Vertex<>("F");
-        Vertex<String> vertex7 = new Vertex<>("G");
-        Vertex<String> vertex8 = new Vertex<>("H");
+        Graph<String> graph = new Graph<>(false, true);
+        Vertex<String> vertexA = new Vertex<>("A");
+        Vertex<String> vertexB = new Vertex<>("B");
+        Vertex<String> vertexC = new Vertex<>("C");
+        Vertex<String> vertexD = new Vertex<>("D");
+        Vertex<String> vertexE = new Vertex<>("E");
+        Vertex<String> vertexZ = new Vertex<>("Z");
 
-        graph.insertVertex(vertex1);
-        graph.insertVertex(vertex2);
-        graph.insertVertex(vertex3);
-        graph.insertVertex(vertex4);
-        graph.insertVertex(vertex5);
-        graph.insertVertex(vertex6);
-        graph.insertVertex(vertex7);
-        graph.insertVertex(vertex8);
+        graph.insertVertex(vertexA);
+        graph.insertVertex(vertexB);
+        graph.insertVertex(vertexC);
+        graph.insertVertex(vertexD);
+        graph.insertVertex(vertexE);
+        graph.insertVertex(vertexZ);
 
-        graph.insertEdge(vertex1, vertex2, 0);
-        graph.insertEdge(vertex1, vertex3, 0);
-        graph.insertEdge(vertex2, vertex4, 0);
-        graph.insertEdge(vertex2, vertex5, 0);
-        graph.insertEdge(vertex3, vertex6, 0);
-        graph.insertEdge(vertex3, vertex7, 0);
+        graph.insertEdge(vertexA, vertexB, 4);
+        graph.insertEdge(vertexA, vertexC, 2);
+        graph.insertEdge(vertexB, vertexD, 5);
+        graph.insertEdge(vertexB, vertexC, 1);
+        graph.insertEdge(vertexC, vertexD, 8);
+        graph.insertEdge(vertexC, vertexE, 10);
+        graph.insertEdge(vertexD, vertexE, 2);
+        graph.insertEdge(vertexD, vertexZ, 6);
+        graph.insertEdge(vertexE, vertexZ, 3);
 
-        NaryTree<String> naryTreeBFS = graph.BFS(vertex3);
-        String preorder;
-        preorder = naryTreeBFS.preorder(naryTreeBFS.getRoot());
-        System.out.println("Preorder of BFS tree: " + preorder);
-
-        ArrayList<NaryTree<String>> naryTreeDFS = graph.DFS();
-        for (NaryTree<String> naryTree : naryTreeDFS) {
-            preorder = naryTree.preorder(naryTree.getRoot());
-            System.out.println("Preorder of DFS tree: " + preorder);
+        Graph<String>.DijkstraResult result = graph.dijkstra(vertexA);
+        for (Vertex<String> vertex : result.getPrevious()) {
+            if ( vertex != null ) {
+                System.out.println(vertex.getValue());
+            }else{
+                System.out.println("null");
+            }
         }
-
-        
+        for (Double distance: result.getDistances()) {
+            System.out.println(distance);
+        }
 
 
     }
