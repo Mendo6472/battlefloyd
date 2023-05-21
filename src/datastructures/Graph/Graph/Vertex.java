@@ -1,13 +1,13 @@
-package datastructures.Graph;
+package datastructures.Graph.Graph;
 
 import java.util.ArrayList;
 
 public class Vertex<V> {
-    V value;
+    public V value;
     Color color;
     int distance;
     Vertex<V> predecessor;
-    ArrayList<Pair<V>> adjacencyList;
+    public ArrayList<Pair<V>> adjacencyList;
 
     public Vertex(V value) {
         this.value = value;

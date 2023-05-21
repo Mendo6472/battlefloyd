@@ -1,35 +1,29 @@
 package test.datastructures;
 
+import datastructures.Graph.AdjacencyMatrixGraph.AdjacencyMatrixGraph;
+import datastructures.Graph.Graph.IGraph;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.Assert.*;
 
-import datastructures.Graph.Graph;
-import datastructures.Graph.Color;
-import datastructures.Graph.IGraph;
-import datastructures.Graph.Vertex;
+import datastructures.Graph.Graph.Vertex;
 import datastructures.NaryTree.NaryTree;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
 
 
 public class GraphTest {
 
-    public Graph<String> graph;
+    public IGraph<String> adjacencyListGraph;
     public Vertex<String> vertexP = new Vertex<>("C");
 
 
     public void setupStage1() {
-        graph = new Graph<>(false, false);
+        adjacencyListGraph = new AdjacencyMatrixGraph<>(false, false);
     }
 
     public void setupStage2() {
-        graph = new Graph<>(false, false);
+        adjacencyListGraph = new AdjacencyMatrixGraph<>(false, false);
 
         Vertex<String> vertex1 = new Vertex<>("A");
         Vertex<String> vertex2 = new Vertex<>("B");
@@ -38,18 +32,18 @@ public class GraphTest {
         Vertex<String> vertex6 = new Vertex<>("F");
         Vertex<String> vertex7 = new Vertex<>("G");
         Vertex<String> vertex8 = new Vertex<>("H");
-        graph.insertVertex(vertex1);
-        graph.insertVertex(vertex2);
-        graph.insertVertex(vertexP);
-        graph.insertVertex(vertex4);
-        graph.insertVertex(vertex5);
-        graph.insertVertex(vertex6);
-        graph.insertVertex(vertex7);
-        graph.insertVertex(vertex8);
+        adjacencyListGraph.insertVertex(vertex1);
+        adjacencyListGraph.insertVertex(vertex2);
+        adjacencyListGraph.insertVertex(vertexP);
+        adjacencyListGraph.insertVertex(vertex4);
+        adjacencyListGraph.insertVertex(vertex5);
+        adjacencyListGraph.insertVertex(vertex6);
+        adjacencyListGraph.insertVertex(vertex7);
+        adjacencyListGraph.insertVertex(vertex8);
     }
 
     public void setupStage3() {
-        graph = new Graph<>(false, false);
+        adjacencyListGraph = new AdjacencyMatrixGraph<>(false, false);
 
         Vertex<String> vertex1 = new Vertex<>("A");
         Vertex<String> vertex2 = new Vertex<>("B");
@@ -59,21 +53,21 @@ public class GraphTest {
         Vertex<String> vertex7 = new Vertex<>("G");
         Vertex<String> vertex8 = new Vertex<>("H");
 
-        graph.insertVertex(vertex1);
-        graph.insertVertex(vertex2);
-        graph.insertVertex(vertexP);
-        graph.insertVertex(vertex4);
-        graph.insertVertex(vertex5);
-        graph.insertVertex(vertex6);
-        graph.insertVertex(vertex7);
-        graph.insertVertex(vertex8);
+        adjacencyListGraph.insertVertex(vertex1);
+        adjacencyListGraph.insertVertex(vertex2);
+        adjacencyListGraph.insertVertex(vertexP);
+        adjacencyListGraph.insertVertex(vertex4);
+        adjacencyListGraph.insertVertex(vertex5);
+        adjacencyListGraph.insertVertex(vertex6);
+        adjacencyListGraph.insertVertex(vertex7);
+        adjacencyListGraph.insertVertex(vertex8);
 
-        graph.insertEdge(vertex1, vertex2, 0);
-        graph.insertEdge(vertex1, vertexP, 0);
-        graph.insertEdge(vertex2, vertex4, 0);
-        graph.insertEdge(vertex2, vertex5, 0);
-        graph.insertEdge(vertexP, vertex6, 0);
-        graph.insertEdge(vertexP, vertex7, 0);
+        adjacencyListGraph.insertEdge(vertex1, vertex2, 0);
+        adjacencyListGraph.insertEdge(vertex1, vertexP, 0);
+        adjacencyListGraph.insertEdge(vertex2, vertex4, 0);
+        adjacencyListGraph.insertEdge(vertex2, vertex5, 0);
+        adjacencyListGraph.insertEdge(vertexP, vertex6, 0);
+        adjacencyListGraph.insertEdge(vertexP, vertex7, 0);
 
     }
 
@@ -82,7 +76,7 @@ public class GraphTest {
     public void testInsertVertex1() {
         setupStage1();
         Vertex<String> vertex = new Vertex<>("A");
-        Vertex<String> v = graph.insertVertex(vertex);
+        Vertex<String> v = adjacencyListGraph.insertVertex(vertex);
         assertEquals(v, vertex);
     }
 
@@ -91,8 +85,8 @@ public class GraphTest {
         setupStage1();
         Vertex<String> vertex = new Vertex<>("A");
 
-        graph.insertVertex(vertex);
-        Vertex<String> v2 = graph.insertVertex(vertex);
+        adjacencyListGraph.insertVertex(vertex);
+        Vertex<String> v2 = adjacencyListGraph.insertVertex(vertex);
 
         assertNull(v2);
     }
@@ -101,7 +95,7 @@ public class GraphTest {
     public void testInsertVertex3() {
         setupStage2();
         Vertex<String> vertex = new Vertex<>("Z");
-        Vertex<String> v = graph.insertVertex(vertex);
+        Vertex<String> v = adjacencyListGraph.insertVertex(vertex);
         assertEquals(v, vertex);
     }
 
@@ -111,7 +105,7 @@ public class GraphTest {
         setupStage1();
         Vertex<String> vertex1 = new Vertex<>("A");
         Vertex<String> vertex2 = new Vertex<>("D");
-        assertTrue(graph.insertEdge(vertex1, vertex2, 0));
+        assertTrue(adjacencyListGraph.insertEdge(vertex1, vertex2, 0));
     }
 
     @Test
@@ -119,8 +113,8 @@ public class GraphTest {
         setupStage1();
         Vertex<String> vertex1 = new Vertex<>("A");
         Vertex<String> vertex2 = new Vertex<>("B");
-        graph.insertEdge(vertex1, vertex2, 0);
-        assertFalse(graph.insertEdge(vertex1, vertex2, 0));
+        adjacencyListGraph.insertEdge(vertex1, vertex2, 0);
+        assertFalse(adjacencyListGraph.insertEdge(vertex1, vertex2, 0));
     }
 
     @Test
@@ -129,9 +123,9 @@ public class GraphTest {
         Vertex<String> vertex1 = new Vertex<>("A");
         Vertex<String> vertex2 = new Vertex<>("B");
         Vertex<String> vertex3 = new Vertex<>("C");
-        graph.insertEdge(vertex1, vertex2, 0);
-        graph.insertEdge(vertex1, vertex3, 0);
-        assertFalse(graph.insertEdge(vertex3, vertex1, 0));
+        adjacencyListGraph.insertEdge(vertex1, vertex2, 0);
+        adjacencyListGraph.insertEdge(vertex1, vertex3, 0);
+        assertFalse(adjacencyListGraph.insertEdge(vertex3, vertex1, 0));
     }
 
     // Delete vertex
@@ -140,8 +134,8 @@ public class GraphTest {
     public void testDeleteVertex1() {
         setupStage1();
         Vertex<String> vertex1 = new Vertex<>("A");
-        graph.insertVertex(vertex1);
-        assertTrue(graph.deleteVertex(vertex1));
+        adjacencyListGraph.insertVertex(vertex1);
+        assertTrue(adjacencyListGraph.deleteVertex(vertex1));
     }
 
     @Test
@@ -149,10 +143,10 @@ public class GraphTest {
         setupStage1();
         Vertex<String> vertex1 = new Vertex<>("A");
         Vertex<String> vertex2 = new Vertex<>("B");
-        graph.insertVertex(vertex1);
-        graph.insertVertex(vertex2);
-        assertTrue(graph.deleteVertex(vertex1));
-        assertFalse(graph.deleteVertex(vertex1));
+        adjacencyListGraph.insertVertex(vertex1);
+        adjacencyListGraph.insertVertex(vertex2);
+        assertTrue(adjacencyListGraph.deleteVertex(vertex1));
+        assertFalse(adjacencyListGraph.deleteVertex(vertex1));
     }
 
     @Test
@@ -160,8 +154,8 @@ public class GraphTest {
         setupStage1();
         Vertex<String> vertex1 = new Vertex<>("A");
         Vertex<String> vertex2 = new Vertex<>("B");
-        graph.insertVertex(vertex1);
-        assertFalse(graph.deleteVertex(vertex2));
+        adjacencyListGraph.insertVertex(vertex1);
+        assertFalse(adjacencyListGraph.deleteVertex(vertex2));
     }
 
     // Delete edge
@@ -171,7 +165,7 @@ public class GraphTest {
         setupStage1();
         Vertex<String> vertex1 = new Vertex<>("A");
         Vertex<String> vertex2 = new Vertex<>("B");
-        assertFalse(graph.deleteEdge(vertex1, vertex2));
+        assertFalse(adjacencyListGraph.deleteEdge(vertex1, vertex2));
     }
 
     @Test
@@ -179,10 +173,10 @@ public class GraphTest {
         setupStage1();
         Vertex<String> vertex1 = new Vertex<>("A");
         Vertex<String> vertex2 = new Vertex<>("B");
-        graph.insertVertex(vertex1);
-        graph.insertVertex(vertex2);
-        graph.insertEdge(vertex1, vertex2, 0);
-        assertTrue(graph.deleteEdge(vertex1, vertex2));
+        adjacencyListGraph.insertVertex(vertex1);
+        adjacencyListGraph.insertVertex(vertex2);
+        adjacencyListGraph.insertEdge(vertex1, vertex2, 0);
+        assertTrue(adjacencyListGraph.deleteEdge(vertex1, vertex2));
     }
 
     @Test
@@ -190,8 +184,8 @@ public class GraphTest {
         setupStage1();
         Vertex<String> vertex1 = new Vertex<>("A");
         Vertex<String> vertex2 = new Vertex<>("B");
-        graph.insertVertex(vertex1);
-        assertFalse(graph.deleteEdge(vertex1, vertex2));
+        adjacencyListGraph.insertVertex(vertex1);
+        assertFalse(adjacencyListGraph.deleteEdge(vertex1, vertex2));
     }
 
 
@@ -199,21 +193,21 @@ public class GraphTest {
     @Test
     public void testBFS1() {
         setupStage3();
-        NaryTree<String> naryTreeBFS = graph.BFS(vertexP);
+        NaryTree<String> naryTreeBFS = adjacencyListGraph.BFS(vertexP);
         assertEquals("CABDEFG",naryTreeBFS.preorder(naryTreeBFS.getRoot()));
     }
 
     @Test
     public void testBFS2() {
         setupStage3();
-        NaryTree<String> naryTreeBFS = graph.BFS(vertexP);
+        NaryTree<String> naryTreeBFS = adjacencyListGraph.BFS(vertexP);
         assertNotEquals("CABDEFGH",naryTreeBFS.preorder(naryTreeBFS.getRoot()));
     }
 
     @Test
     public void testBFS3() {
         setupStage2();
-        NaryTree<String> naryTreeBFS = graph.BFS(vertexP);
+        NaryTree<String> naryTreeBFS = adjacencyListGraph.BFS(vertexP);
         assertEquals("C",naryTreeBFS.preorder(naryTreeBFS.getRoot()));
 
     }
@@ -222,7 +216,7 @@ public class GraphTest {
     @Test
     public void testDFS1() {
         setupStage3();
-        ArrayList<NaryTree<String>> naryTreeDFS = graph.DFS();
+        ArrayList<NaryTree<String>> naryTreeDFS = adjacencyListGraph.DFS();
         assertEquals("ABDECFG",naryTreeDFS.get(0).preorder(naryTreeDFS.get(0).getRoot()));
         assertEquals("H",naryTreeDFS.get(1).preorder(naryTreeDFS.get(1).getRoot()));
     }
@@ -230,14 +224,14 @@ public class GraphTest {
     @Test
     public void testDFS2() {
         setupStage3();
-        ArrayList<NaryTree<String>> naryTreeDFS = graph.DFS();
+        ArrayList<NaryTree<String>> naryTreeDFS = adjacencyListGraph.DFS();
         assertNotEquals("ABDECFGH",naryTreeDFS.get(0).preorder(naryTreeDFS.get(0).getRoot()));
     }
 
     @Test
     public void testDFS3() {
         setupStage2();
-        ArrayList<NaryTree<String>> naryTreeDFS = graph.DFS();
+        ArrayList<NaryTree<String>> naryTreeDFS = adjacencyListGraph.DFS();
         assertEquals("A",naryTreeDFS.get(0).preorder(naryTreeDFS.get(0).getRoot()));
         assertEquals("B",naryTreeDFS.get(1).preorder(naryTreeDFS.get(1).getRoot()));
         assertEquals("C",naryTreeDFS.get(2).preorder(naryTreeDFS.get(2).getRoot()));

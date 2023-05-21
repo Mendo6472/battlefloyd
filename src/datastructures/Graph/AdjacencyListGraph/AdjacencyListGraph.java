@@ -1,21 +1,22 @@
-package datastructures.Graph;
+package datastructures.Graph.AdjacencyListGraph;
 
+import datastructures.Graph.Graph.*;
 import datastructures.NaryTree.NaryTree;
 import datastructures.NaryTree.Node;
+import datastructures.Graph.Graph.Vertex;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
-import java.util.Objects;
-public class Graph<V> implements IGraph<V>{
+
+public class AdjacencyListGraph<V> implements IGraph<V> {
     boolean addressed;
     boolean weighted;
     ArrayList<Vertex<V>> vertexList;
     
     int time;
 
-    public Graph(boolean addressed, boolean weighted) {
+    public AdjacencyListGraph(boolean addressed, boolean weighted) {
         vertexList = new ArrayList<>();
         this.addressed = addressed;
         this.weighted = weighted;

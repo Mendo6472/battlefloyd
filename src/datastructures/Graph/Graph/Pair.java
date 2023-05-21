@@ -1,4 +1,5 @@
-package datastructures.Graph;
+package datastructures.Graph.Graph;
+
 public class Pair<V>{
 
   private Vertex<V> vertex;
