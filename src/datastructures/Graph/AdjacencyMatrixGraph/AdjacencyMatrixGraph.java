@@ -199,6 +199,32 @@ public class AdjacencyMatrixGraph<V> implements IGraph<V> {
         return new DijkstraResult<V>(previous, distances);
     }
 
+    @Override
+    public double[][] floydWarshall() {
+        double[][] distances = new double[vertexList.size()][vertexList.size()];
+        //Vertex<V>[][] previous = new Vertex[vertexList.size()][vertexList.size()];
+        for(int i = 0; i < vertexList.size(); i++){
+            for(int j = 0; j < vertexList.size(); j++){
+                if(i == j){
+                    distances[i][j] = 0;
+                } else {
+                    distances[i][j] = adjacencyMatrixGraph.get(i).get(j);
+                }
+
+            }
+        }
+        for (int k = 0; k < vertexList.size(); k++) {
+            for (int i = 0; i < vertexList.size(); i++) {
+                for (int j = 0; j < vertexList.size(); j++) {
+                    if ( distances[i][j] > distances[i][k] + distances[k][j] ) {
+                        distances[i][j] = distances[i][k] + distances[k][j];
+                    }
+                }
+            }
+        }
+        return distances;
+    }
+
     public void showMatrix(){
         for(int i = 0; i < vertexList.size(); i++){
             for(int j = 0; j < vertexList.size(); j++){

@@ -14,4 +14,5 @@ public interface IGraph<V> {
     public NaryTree<V> BFS(Vertex<V> s);
     public ArrayList<NaryTree<V>> DFS();
     public DijkstraResult<V> dijkstra (Vertex<V> source);
+    public double[][] floydWarshall();
 }

@@ -10,6 +10,8 @@ import static org.junit.Assert.*;
 
 import datastructures.Graph.Graph.Vertex;
 import datastructures.NaryTree.NaryTree;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayList;
 
@@ -20,14 +22,26 @@ public class GraphTest {
     public Vertex<String> vertexP = new Vertex<>("C");
     public Vertex<String> vertexA = new Vertex<>("A");
 
+    public void globalGraphDeclaration(){
+        /*
+        To tests the different kinds of graph implementation change the initialization
+
+        Tests of adjacency list:
+        graph = new AdjacencyListGraph<>(false, false);
+
+        Tests of adjacency matrix:
+        graph = new AdjacencyMatrixGraph<>(false, false);
+         */
+        graph = new AdjacencyMatrixGraph<>(false, false);
+    }
+
 
     public void setupStage1() {
-        graph = new AdjacencyListGraph<>(false, false);
+        globalGraphDeclaration();
     }
 
     public void setupStage2() {
-        graph = new AdjacencyMatrixGraph<>(false, false);
-
+        globalGraphDeclaration();
         Vertex<String> vertex1 = new Vertex<>("A");
         Vertex<String> vertex2 = new Vertex<>("B");
         Vertex<String> vertex4 = new Vertex<>("D");
@@ -46,8 +60,7 @@ public class GraphTest {
     }
 
     public void setupStage3() {
-        graph = new AdjacencyMatrixGraph<>(false, false);
-
+        globalGraphDeclaration();
         Vertex<String> vertex1 = new Vertex<>("A");
         Vertex<String> vertex2 = new Vertex<>("B");
         Vertex<String> vertex4 = new Vertex<>("D");
@@ -75,8 +88,7 @@ public class GraphTest {
     }
 
     public void setupStage4(){
-        graph = new AdjacencyMatrixGraph<>(false, false);
-
+        globalGraphDeclaration();
         Vertex<String> vertexB = new Vertex<>("B");
         Vertex<String> vertexC = new Vertex<>("C");
         Vertex<String> vertexD = new Vertex<>("D");
@@ -341,6 +353,66 @@ public class GraphTest {
         String expectedDistances = "0.0 3.0 2.0 8.0 10.0 13.0";
         assertEquals(expectedResult, resultString.trim());
         assertEquals(expectedDistances, distances.trim());
+    }
+
+    @Test
+    public void testFloydWarshall1(){
+        setupStage3();
+        double[][] expectedResult = {
+                {0, 3, 5, 4, 11, 17, 10, Double.MAX_VALUE},
+                {3, 0, 8, 1, 8, 20, 13, Double.MAX_VALUE},
+                {5, 8, 0, 9, 16, 12, 5, Double.MAX_VALUE},
+                {4, 1, 9, 0, 9, 21, 14, Double.MAX_VALUE},
+                {11, 8, 16, 9, 0, 28, 21, Double.MAX_VALUE},
+                {17, 20, 12, 21, 28, 0, 17, Double.MAX_VALUE},
+                {10, 13, 5, 14, 21, 17, 0, Double.MAX_VALUE},
+                {Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, 0}
+        };
+        double[][] result = graph.floydWarshall();
+        for (int i = 0; i < result.length; i++) {
+            for (int j = 0; j < result[i].length; j++) {
+                assertEquals(expectedResult[i][j], result[i][j], 0);
+            }
+        }
+    }
+
+    @Test
+    public void testFloydWarshall2(){
+        setupStage2();
+        double[][] expectedResult = {
+                {0, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE},
+                {Double.MAX_VALUE, 0, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE},
+                {Double.MAX_VALUE, Double.MAX_VALUE, 0, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE},
+                {Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, 0, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE},
+                {Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, 0, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE},
+                {Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, 0, Double.MAX_VALUE, Double.MAX_VALUE},
+                {Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, 0, Double.MAX_VALUE},
+                {Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, 0}
+        };
+        double[][] result = graph.floydWarshall();
+        for (int i = 0; i < result.length; i++) {
+            for (int j = 0; j < result[i].length; j++) {
+                assertEquals(expectedResult[i][j], result[i][j], 0);
+            }
+        }
+    }
+    @Test
+    public void testFloydWarshall3(){
+        setupStage4();
+        double[][] expectedResult = {
+                {0, 3, 2, 8, 10, 13},
+                {3, 0, 1, 5, 7, 10},
+                {2, 1, 0, 6, 8, 11},
+                {8, 5, 6, 0, 2, 5},
+                {10, 7, 8, 2, 0, 3},
+                {13, 10, 11, 5, 3, 0}
+        };
+        double[][] result = graph.floydWarshall();
+        for (int i = 0; i < result.length; i++) {
+            for (int j = 0; j < result[i].length; j++) {
+                assertEquals(expectedResult[i][j], result[i][j], 0);
+            }
+        }
     }
    
 }

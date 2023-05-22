@@ -43,7 +43,7 @@ public class Main {
                 System.out.println("nill");
             }
         }
-        for (Double distance: resultDijkstra.getDistances()) {
+        for (Double distance: result.getDistances()) {
             System.out.println(distance);
         }
         double[][] resultFloydWarshall = graph.floydWarshall();
