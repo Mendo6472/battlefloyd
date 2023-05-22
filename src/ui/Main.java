@@ -43,9 +43,21 @@ public class Main {
                 System.out.println("nill");
             }
         }
-        for (Double distance: result.getDistances()) {
+        for (Double distance: resultDijkstra.getDistances()) {
             System.out.println(distance);
         }
+        double[][] resultFloydWarshall = graph.floydWarshall();
+        for (double[] doubles : resultFloydWarshall) {
+            for (int j = 0; j < resultFloydWarshall.length; j++) {
+                if ( doubles[j] == Double.MAX_VALUE ) {
+                    System.out.print("[inf]");
+                } else {
+                    System.out.print("[" + doubles[j] + "]");
+                }
+            }
+            System.out.println(" ");
+        }
+
 
 
     }
