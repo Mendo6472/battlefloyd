@@ -226,6 +226,55 @@ public class Graph<V> implements IGraph<V>{
         return new DijkstraResult(previous, distances);
     }
 
+/*
+    public class FloydWarshalResult {
+        private final Vertex<V>[][] previous;
+        private final double[][] distances;
 
+        public FloydWarshalResult(Vertex<V>[][] previous, double[][] distances) {
+            this.previous = previous;
+            this.distances = distances;
+        }
+
+        public Vertex<V>[][] getPrevious() {
+            return previous;
+        }
+
+        public double[][] getDistances() {
+            return distances;
+        }
+    }
+
+ */
+    public double[][] floydWarshall() {
+        double[][] distances = new double[vertexList.size()][vertexList.size()];
+        //Vertex<V>[][] previous = new Vertex[vertexList.size()][vertexList.size()];
+        for (int i = 0; i < vertexList.size(); i++) {
+            for (int j = 0; j < vertexList.size(); j++) {
+                if ( i == j ) {
+                    distances[i][j] = 0.0;
+                } else if ( searchVertexInAdjencyList(vertexList.get(i), vertexList.get(j)) ) {
+                    distances[i][j] = vertexList.get(i).adjacencyList.get(searchPosVertexInAdjencyList(vertexList.get(i), vertexList.get(j))).getWeight();
+
+                } else {
+                    distances[i][j] = Double.MAX_VALUE;
+
+                }
+                //previous[i][j] = vertexList.get(j);
+
+            }
+        }
+
+        for (int k = 0; k < vertexList.size(); k++) {
+            for (int i = 0; i < vertexList.size(); i++) {
+                for (int j = 0; j < vertexList.size(); j++) {
+                    if ( distances[i][j] > distances[i][k] + distances[k][j] ) {
+                        distances[i][j] = distances[i][k] + distances[k][j];
+                    }
+                }
+            }
+        }
+        return distances;
+    }
 
 }

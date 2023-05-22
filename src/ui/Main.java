@@ -31,17 +31,29 @@ public class Main {
         graph.insertEdge(vertexD, vertexZ, 6);
         graph.insertEdge(vertexE, vertexZ, 3);
 
-        Graph<String>.DijkstraResult result = graph.dijkstra(vertexA);
-        for (Vertex<String> vertex : result.getPrevious()) {
+        Graph<String>.DijkstraResult resultDijkstra = graph.dijkstra(vertexA);
+        for (Vertex<String> vertex : resultDijkstra.getPrevious()) {
             if ( vertex != null ) {
                 System.out.println(vertex.getValue());
             }else{
                 System.out.println("null");
             }
         }
-        for (Double distance: result.getDistances()) {
+        for (Double distance: resultDijkstra.getDistances()) {
             System.out.println(distance);
         }
+        double[][] resultFloydWarshall = graph.floydWarshall();
+        for (double[] doubles : resultFloydWarshall) {
+            for (int j = 0; j < resultFloydWarshall.length; j++) {
+                if ( doubles[j] == Double.MAX_VALUE ) {
+                    System.out.print("[inf]");
+                } else {
+                    System.out.print("[" + doubles[j] + "]");
+                }
+            }
+            System.out.println(" ");
+        }
+
 
 
     }
