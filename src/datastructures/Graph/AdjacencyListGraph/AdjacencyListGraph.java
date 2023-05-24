@@ -128,6 +128,55 @@ public class AdjacencyListGraph<V> implements IGraph<V> {
     }
 
     @Override
+    public NaryTree<Vertex<V>> prim(Vertex<V> s) {
+        NaryTree<Vertex<V>> naryTree = new NaryTree<>();
+        naryTree.setRoot(new Node<>(s));
+        Heap<Double, Vertex<V>> queue = new Heap<>();
+        queue.insert(0.0, s);
+        for(Vertex <V> vertex : vertexList){
+            if(vertex != s){
+                queue.insert(Double.MAX_VALUE, vertex);
+                vertex.setColor(Color.WHITE);
+            }
+        }
+        while (queue.getHeapSize() > 0){
+            datastructures.PriorityQueue.Node<Double, Vertex<V>> u = queue.extractMin();
+            for(Pair<V> adj : u.getValue().getAdjacencyList()){
+                int heapNodePos = queue.searchByValue(adj.getVertex());
+                if(heapNodePos != -1){
+                    datastructures.PriorityQueue.Node<Double, Vertex<V>> v = queue.getHeap().get(heapNodePos);
+                    if(v.getValue().getColor() == Color.WHITE && adj.getWeight() < v.getKey()){
+                        v.setKey(adj.getWeight());
+                        v.getValue().setWeight(adj.getWeight());
+                        queue.decreaseKey(queue.getHeap().indexOf(v),adj.getWeight());
+                        v.getValue().setPredecessor(u.getValue());
+                    }
+                }
+            }
+            queue.buildMinHeap();
+            u.getValue().setColor(Color.BLACK);
+        }
+        Queue<Vertex<V>> treeQueue = new LinkedList<>();
+        treeQueue.add(s);
+        while (!treeQueue.isEmpty()){
+            Vertex<V> vertex = treeQueue.poll();
+            for(Pair<V> v : vertex.getAdjacencyList()){
+                if(v.getVertex().getPredecessor() == vertex){
+                    treeQueue.add(v.getVertex());
+                    naryTree.insertNode(v.getVertex(), vertex);
+                }
+            }
+        }
+        return naryTree;
+    }
+
+    @Override
+    public UnionFind<Vertex<V>> kruskal(){
+
+        return null;
+    }
+
+    @Override
     public ArrayList<NaryTree<V>> DFS() {
         ArrayList<NaryTree<V>> naryTrees = new ArrayList<>();
         for (Vertex<V> u: vertexList) {

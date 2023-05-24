@@ -6,6 +6,8 @@ public class Vertex<V> {
     public V value;
     Color color;
     int distance;
+    double weight;
+
     Vertex<V> predecessor;
     public ArrayList<Pair<V>> adjacencyList;
 
@@ -58,4 +60,14 @@ public class Vertex<V> {
     public void setAdjacencyList(ArrayList<Pair<V>> adjacencyList) {
         this.adjacencyList = adjacencyList;
     }
+
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
 }
