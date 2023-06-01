@@ -1,6 +1,5 @@
 package datastructures.Graph.AdjacencyMatrixGraph;
 
-import datastructures.Graph.AdjacencyListGraph.AdjacencyListGraph;
 import datastructures.Graph.Graph.*;
 import datastructures.NaryTree.NaryTree;
 import datastructures.NaryTree.Node;
@@ -223,6 +222,68 @@ public class AdjacencyMatrixGraph<V> implements IGraph<V> {
             }
         }
         return distances;
+    }
+
+    @Override
+    public NaryTree<Vertex<V>> prim(Vertex<V> s) {
+        NaryTree<Vertex<V>> naryTree = new NaryTree<>();
+        naryTree.setRoot(new Node<>(s));
+        Heap<Double, Vertex<V>> queue = new Heap<>();
+        queue.insert(0.0, s);
+        for(Vertex <V> vertex : vertexList){
+            if(vertex != s){
+                queue.insert(Double.MAX_VALUE, vertex);
+                vertex.setColor(Color.WHITE);
+            }
+        }
+        while (queue.getHeapSize() > 0){
+            datastructures.PriorityQueue.Node<Double, Vertex<V>> u = queue.extractMin();
+            int uPos = vertexList.indexOf(u.getValue());
+            for(int i = 0; i < vertexList.size(); i++){
+                if(i != uPos){
+                    if(adjacencyMatrixGraph.get(uPos).get(i) < Double.MAX_VALUE){
+                        int heapNodePos = queue.searchByValue(vertexList.get(i));
+                        if(heapNodePos != -1){
+                            double weight = adjacencyMatrixGraph.get(uPos).get(i);
+                            datastructures.PriorityQueue.Node<Double, Vertex<V>> v = queue.getHeap().get(heapNodePos);
+                            if(v.getValue().getColor() == Color.WHITE && weight < v.getKey()){
+                                v.setKey(weight);
+                                v.getValue().setWeight(weight);
+                                queue.decreaseKey(queue.getHeap().indexOf(v),weight);
+                                v.getValue().setPredecessor(u.getValue());
+                            }
+                        }
+                    }
+                }
+
+            }
+            queue.buildMinHeap();
+            u.getValue().setColor(Color.BLACK);
+        }
+        Queue<Vertex<V>> treeQueue = new LinkedList<>();
+        treeQueue.add(s);
+        while (!treeQueue.isEmpty()){
+            Vertex<V> vertex = treeQueue.poll();
+            int vertexPos = vertexList.indexOf(vertex);
+            for(int i = 0; i < vertexList.size(); i++){
+                if(i != vertexPos){
+                    double weight = adjacencyMatrixGraph.get(vertexPos).get(i);
+                    if(weight < Double.MAX_VALUE){
+                        Vertex<V> v = vertexList.get(i);
+                        if(v.getPredecessor() == vertex){
+                            treeQueue.add(v);
+                            naryTree.insertNode(v, vertex);
+                        }
+                    }
+                }
+            }
+        }
+        return naryTree;
+    }
+
+    @Override
+    public UnionFind<Vertex<V>> kruskal() {
+        return null;
     }
 
     public void showMatrix(){
