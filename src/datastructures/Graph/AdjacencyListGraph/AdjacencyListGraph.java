@@ -6,6 +6,7 @@ import datastructures.NaryTree.Node;
 import datastructures.Graph.Graph.Vertex;
 
 import datastructures.PriorityQueue.Heap;
+import datastructures.UnionFind.UnionFind;
 
 
 import java.util.ArrayList;
@@ -265,4 +266,35 @@ public class AdjacencyListGraph<V> implements IGraph<V> {
         return distances;
     }
 
-}
+
+
+    public ArrayList<Vertex<V>[]> kruskal(){
+        ArrayList<Vertex<V>[]> A = new ArrayList<>();
+        UnionFind<V> unionFind = new UnionFind<>();
+        Heap<Double, Vertex<V>[]> PQ = new Heap<>();
+         for (Vertex<V> vertex: vertexList) {
+            unionFind.makeSet(vertex.getValue());
+             for (int i = 0; i < vertex.adjacencyList.size(); i++) {
+                 Vertex<V>[] pairVertex = new Vertex[2];
+                 pairVertex[0] = vertex;
+                 pairVertex[1] = vertex.adjacencyList.get(i).getVertex();
+                 PQ.insert(vertex.getAdjacencyList().get(i).getWeight(), pairVertex);
+             }
+        }
+         PQ.buildMinHeap();
+         while (PQ.getHeapSize()>0) {
+
+             datastructures.PriorityQueue.Node<Double, Vertex<V>[]> tmp = PQ.extractMin();
+             Vertex<V> u = tmp.getValue()[0];
+             Vertex<V> v = tmp.getValue()[1];
+             if (unionFind.find(u.getValue()) != unionFind.find(v.getValue())){
+                 A.add(tmp.getValue());
+                 unionFind.union(unionFind.find(u.getValue()),unionFind.find(v.getValue()));
+             }
+         }
+         return A;
+        }
+
+    }
+
+
