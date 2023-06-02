@@ -16,5 +16,5 @@ public interface IGraph<V> {
     public DijkstraResult<V> dijkstra (Vertex<V> source);
     public double[][] floydWarshall();
     public NaryTree<Vertex<V>> prim(Vertex<V> source);
-    public UnionFind<Vertex<V>> kruskal();
+    public ArrayList<Vertex<V>[]> kruskal();
 }

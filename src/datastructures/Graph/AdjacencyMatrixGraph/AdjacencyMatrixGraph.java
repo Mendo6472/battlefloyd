@@ -4,6 +4,7 @@ import datastructures.Graph.Graph.*;
 import datastructures.NaryTree.NaryTree;
 import datastructures.NaryTree.Node;
 import datastructures.PriorityQueue.Heap;
+import datastructures.UnionFind.UnionFind;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -282,8 +283,35 @@ public class AdjacencyMatrixGraph<V> implements IGraph<V> {
     }
 
     @Override
-    public UnionFind<Vertex<V>> kruskal() {
-        return null;
+    public ArrayList<Vertex<V>[]> kruskal(){
+        ArrayList<Vertex<V>[]> A = new ArrayList<>();
+        datastructures.UnionFind.UnionFind<V> unionFind = new UnionFind<>();
+        Heap<Double, Vertex<V>[]> PQ = new Heap<>();
+        for (int i = 0; i < vertexList.size(); i++) {
+            unionFind.makeSet(vertexList.get(i).getValue());
+            for (int j = 0; j < vertexList.size(); j++) {
+                if(adjacencyMatrixGraph.get(i).get(j) != Double.MAX_VALUE){
+                    Vertex<V>[] pairVertex = new Vertex[2];
+                    pairVertex[0] = vertexList.get(i);
+                    pairVertex[1] = vertexList.get(j);
+                    PQ.insert(adjacencyMatrixGraph.get(i).get(j), pairVertex);
+                }
+
+            }
+        }
+
+        PQ.buildMinHeap();
+        while (PQ.getHeapSize()>0) {
+
+            datastructures.PriorityQueue.Node<Double, Vertex<V>[]> tmp = PQ.extractMin();
+            Vertex<V> u = tmp.getValue()[0];
+            Vertex<V> v = tmp.getValue()[1];
+            if (unionFind.find(u.getValue()) != unionFind.find(v.getValue())){
+                A.add(tmp.getValue());
+                unionFind.union(unionFind.find(u.getValue()),unionFind.find(v.getValue()));
+            }
+        }
+        return A;
     }
 
     public void showMatrix(){

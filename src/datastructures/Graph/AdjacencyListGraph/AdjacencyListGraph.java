@@ -171,11 +171,6 @@ public class AdjacencyListGraph<V> implements IGraph<V> {
         return naryTree;
     }
 
-    @Override
-    public UnionFind<Vertex<V>> kruskal(){
-
-        return null;
-    }
 
     @Override
     public ArrayList<NaryTree<V>> DFS() {

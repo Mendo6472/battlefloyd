@@ -414,5 +414,88 @@ public class GraphTest {
             }
         }
     }
+
+    @Test
+    public void testPrim1(){
+        setupStage3();
+        String[] expectedResult = {"C","A","B","D","E","F","G"};
+
+        NaryTree<Vertex<String>> result = graph.prim(vertexP);
+        ArrayList<Vertex<String>> resultPreOrder = result.preorderList(result.getRoot()) ;
+        for (int i = 0; i < resultPreOrder.size(); i++) {
+            assertEquals(expectedResult[i],resultPreOrder.get(i).getValue());
+        }
+    }
+
+    @Test
+    public void testPrim2(){
+        setupStage2();
+
+        NaryTree<Vertex<String>> result = graph.prim(vertexP);
+        assertEquals(result.weight(),1);
+    }
+    @Test
+    public void testPrim3(){
+        setupStage4();
+        String[] expectedResult = {"A","C","B","D","E","Z"};
+        NaryTree<Vertex<String>> result = graph.prim(vertexA);
+        ArrayList<Vertex<String>> resultPreOrder = result.preorderList(result.getRoot()) ;
+        for (int i = 0; i < resultPreOrder.size(); i++) {
+            assertEquals(expectedResult[i],resultPreOrder.get(i).getValue());
+        }
+
+    }
+
+    @Test
+    public void testKruskal1(){
+        setupStage3();
+        String[][] expectedResult = {
+                {"B","D"},
+                {"A","B"},
+                {"A","C"},
+                {"G","C"},
+                {"B","E"},
+                {"F","C"},
+        };
+        ArrayList<Vertex<String>[]> paths = graph.kruskal();
+
+        for (int i = 0; i < paths.size(); i++) {
+            for (int j = 0; j < paths.get(0).length; j++) {
+                assertEquals(expectedResult[i][j], paths.get(i)[j].getValue());
+
+            }
+
+        }
+    }
+
+    @Test
+    public void testKruskal2(){
+        setupStage2();
+
+        ArrayList<Vertex<String>[]> paths = graph.kruskal();
+        assertTrue(paths.isEmpty());
+    }
+    @Test
+    public void testKruskal3(){
+        setupStage4();
+        String[][] expectedResult = {
+                {"B","C"},
+                {"A","C"},
+                {"D","E"},
+                {"E","Z"},
+                {"B","D"},
+        };
+        ArrayList<Vertex<String>[]> paths = graph.kruskal();
+
+        for (int i = 0; i < paths.size(); i++) {
+            for (int j = 0; j < paths.get(0).length; j++) {
+                assertEquals(expectedResult[i][j], paths.get(i)[j].getValue());
+
+            }
+
+        }
+    }
+
+
    
 }

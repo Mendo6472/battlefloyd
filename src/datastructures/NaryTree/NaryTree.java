@@ -47,6 +47,23 @@ public class NaryTree<V>{
         return list.toString();
     }
 
+    public ArrayList<V> preorderList(Node<V> current) {
+        ArrayList<V> list = new ArrayList<>();
+        preorderListH(current, list);
+        return list;
+    }
+
+    private void preorderListH(Node<V> current, ArrayList<V> list) {
+        if (current == null) {
+            return;
+        }
+        list.add(current.getValue());
+        for (Node<V> child : current.getChildren()) {
+            preorderListH(child, list);
+        }
+    }
+
+
 
 
     public void insertNode (V node, V dad){
